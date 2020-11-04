@@ -18,7 +18,7 @@
 		</view>
 		<view class="functionBtnBox">
 			<view class="functionBtnCont">
-				<view class="functionBtnList" @tap="toCase">
+				<view class="functionBtnList" @tap="toSeries">
 					<view class="functionBtnListBox">
 						<image class="functionBtnListImage" mode="scaleToFill" src="/static/image/index/fire.png"></image>
 					</view>
@@ -60,7 +60,7 @@
 				<text class="lookMore" @tap="lookMore">查看更多</text>
 			</view>
 			<view class="information">
-				<view class="informationList" v-for="item in 6" :key="item">
+				<view class="informationList" v-for="item in 6" :key="item" @tap="toInformationDetails">
 					<image class="informationImage" src="/static/logo.png" mode="aspectFill"></image>
 					<view class="informationTextTitle">
 						<view class="synopsis">
@@ -113,7 +113,7 @@
 			toCase(){
 				// 查看案例
 				uni.switchTab({
-				    url: '/pages/case/index'
+				    url: '/pages/case/index/index'
 				});
 			},
 			toOffer(){
@@ -125,6 +125,18 @@
 				// 跳转至质保
 				uni.navigateTo({
 					url: '../guarantee/index'
+				})
+			},
+			toSeries(){
+				// 跳转到产品系列
+				uni.navigateTo({
+					url: '../series/index'
+				})
+			},
+			toInformationDetails(){
+				// 跳转到资讯详情
+				uni.navigateTo({
+					url: '../informationDetails/index'
 				})
 			}
 		}

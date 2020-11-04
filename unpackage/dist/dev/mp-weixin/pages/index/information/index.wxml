@@ -1,6 +1,0 @@
-<view class="information data-v-7044026e"><block wx:for="{{6}}" wx:for-item="item" wx:for-index="__i0__" wx:key="*this"><view class="informationList data-v-7044026e"><image class="informationImage data-v-7044026e" src="/static/logo.png" mode="aspectFill"></image><view class="informationTextTitle data-v-7044026e"><view class="synopsis data-v-7044026e">简介简介简介简介简介简介简介简介简介简介简介简介
-				简介简介简介简介简介简介简介简介简介简介简介简介
-				简介简介简介简介简介简介简介简介简介简介简介简介
-				简介简介简介简介简介简介简介简介简介简介简介简介
-				简介简介简介简介简介简介简介简介简介简介简介简介
-				简介简介简介简介简介简介简介简介简介简介简介简介</view><view class="timeLook data-v-7044026e"><text class="time data-v-7044026e">2020-11-4 14:41:15</text><text class="look data-v-7044026e">1322</text></view></view></view></block></view>

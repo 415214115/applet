@@ -3,7 +3,7 @@
 		<view class="searchBoxW flex">
 			<view class="searchBox flex">
 				<image class="searchImg" mode="scaleToFill" src="/static/image/index/search.png"></image>
-				<input class="searchInput" type="text" value="" @confirm="search" placeholder="请输入搜索内容" placeholder-class="placeholder" confirm-type="search" />
+				<input class="searchInput" type="text" v-model="searchData" value="" @confirm="search" placeholder="请输入搜索内容" placeholder-class="placeholder" confirm-type="search" />
 			</view>
 			<view class="searchBtn" @tap="search">搜索</view>
 		</view>
@@ -17,17 +17,13 @@
 				<view class="searchListItem">带刺的玫瑰</view>
 			</view>
 		</view>
-		<view class="searchListW">
+		<view class="searchListW" v-if="historyList.length > 0">
 			<view class="searchList flex">
 				<text>历史搜索</text>
 				<image class="deleteImg" @tap="deleteSearchData" src="/static/image/index/delete.png" mode="aspectFit"></image>
 			</view>
 			<view class="searchListBox">
-				<view class="searchListItem">画画的baby</view>
-				<view class="searchListItem">画画的baby</view>
-				<view class="searchListItem">奔驰的小野马</view>
-				<view class="searchListItem">和</view>
-				<view class="searchListItem">带刺的玫瑰</view>
+				<view class="searchListItem" v-for="(item, index) in historyList" :key="index">{{ item }}</view>
 			</view>
 		</view>
 	</view>
@@ -37,14 +33,46 @@
 	export default{
 		data(){
 			return{
-				
+				searchData: '',
+				historyList: []
+			}
+		},
+		onLoad() {
+			let history = uni.getStorageSync('searchData')
+			if(history){
+				this.historyList = history.split(',')
 			}
 		},
 		methods:{
 			search(){
 				// 搜索
+				let that = this
 				uni.switchTab({
-				    url: '/pages/case/index'
+				    url: '/pages/case/index/index',
+					success() {
+						that.historyList.push(that.searchData)
+						console.log(that.historyList.join(','))
+						uni.setStorageSync('searchData', that.historyList.join(','))
+					}
+				});
+			},
+			deleteSearchData(){
+				let that = this
+				uni.showModal({
+				    title: '提示',
+				    content: '是否要清空历史搜索记录',
+				    success: function (res) {
+				        if (res.confirm) {
+							uni.removeStorageSync('searchData');
+							that.historyList = []
+							uni.showToast({
+								icon: 'none',
+								title: '历史记录清除成功'
+							})
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
 				});
 			}
 		}

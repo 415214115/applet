@@ -1,6 +1,6 @@
 <template>
 	<view class="information">
-		<view class="informationList" v-for="item in 6" :key="item">
+		<view class="informationList" v-for="item in 6" :key="item" @tap="toInformationDetails">
 			<image class="informationImage" src="/static/logo.png" mode="aspectFill"></image>
 			<view class="informationTextTitle">
 				<view class="synopsis">
@@ -21,6 +21,20 @@
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+			toInformationDetails(){
+				uni.navigateTo({
+					url: '../informationDetails/index'
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

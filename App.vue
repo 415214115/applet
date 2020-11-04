@@ -14,6 +14,11 @@
 
 <style>
 	/*每个页面公共css */
-	image{display: block;}
-	view{box-sizing: border-box;font-size: 28upx;}
+	image{
+		display: block;
+	}
+	view,scroll-view{
+		box-sizing: border-box;
+		font-size: 28upx;
+	}
 </style>

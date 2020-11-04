@@ -22,8 +22,14 @@
 		</view>
 		<view class="caseShow">
 			<view class="caseList" v-for="item in 10" :key="item">
-				<image class="caseImage" src="/static/logo.png" mode="aspectFill"></image>
-				<view class="caseTextTitle">简介简介简介简介简介简介简介简介简介简介简介简介</view>
+				<image class="caseImage" src="/static/logo.png" mode="aspectFill" @tap="toCaseDetails"></image>
+				<view class="caseTextTitle">
+					<view class="caseTextTitles">
+						简介简介简介简介简介简介简介简介简介简介简介简介
+						简介简介简介简介简介简介简介简介简介简介简介简介
+					</view>
+					<view class="toCaseDetails" @tap="toCaseDetails">查看详情</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -45,6 +51,11 @@
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
+			},
+			toCaseDetails(){
+				uni.navigateTo({
+					url: '../caseDetails/index'
+				})
 			}
 		}
 	}
@@ -66,29 +77,46 @@
 		box-shadow: 0 0 10upx 1upx rgba(0,0,0,0.5);
 	}
 	.caseList{
-		width: 223upx;
-		margin-left: 20upx;
-		display: inline-block;
+		width: 710upx;
+		/* margin-left: 20upx; */
+		/* display: inline-block; */
 		text-align: center;
+		position: relative;
 	}
-	.caseList:nth-child(3n+1){
+	/* .caseList:nth-child(3n+1){
 		margin-left: 0;
-	}
+	} */
 	.caseImage{
-		width: 223upx;
-		height: 223upx;
+		width: 710upx;
+		height: 350upx;
 		border-radius: 10upx;
 		margin-bottom: 10upx;
 		margin-top: 20upx;
 	}
 	.caseTextTitle{
-		width: 223upx;
+		padding: 10upx;
+		font-size: 24upx;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0,0,0,0.5);
+		height: 130upx;
+		color: #FFFFFF;
+		border-radius: 0 0 10upx 10upx;
+	}
+	.caseTextTitles{
+		width: 690upx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		padding: 0 10upx;
-		color: #313131;
-		font-size: 24upx;
+	}
+	.toCaseDetails{
+		position: absolute;
+		bottom: 20upx;
+		right: 20upx;
+		color: #FFFFFF;
+		font-size: 20upx;
 	}
 	.selectorBox{
 		display: flex;

@@ -1,14 +1,19 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/guarantee/index",
-			"style": {
-				"navigationBarTitleText": "质保查询"
-			}
-		},{
 			"path": "pages/index/index/index",
 			"style": {
 				"navigationBarTitleText": "KWK色彩车身保护膜"
+			}
+		},{
+			"path": "pages/index/series/index",
+			"style": {
+				"navigationBarTitleText": "产品系列"
+			}
+		},{
+			"path": "pages/index/guarantee/index",
+			"style": {
+				"navigationBarTitleText": "质保查询"
 			}
 		},{
 			"path": "pages/index/information/index",
@@ -16,16 +21,24 @@
 				"navigationBarTitleText": "热门资讯"
 			}
 		},{
+			"path": "pages/index/informationDetails/index",
+			"style": {
+				"navigationBarTitleText": "资讯详情"
+			}
+		},{
 			"path": "pages/index/search/index",
 			"style": {
 				"navigationBarTitleText": "搜索"
 			}
-		},
-		
-		{
-			"path": "pages/case/index",
+		},{
+			"path": "pages/case/index/index",
 			"style": {
 				"navigationBarTitleText": "案例"
+			}
+		},{
+			"path": "pages/case/caseDetails/index",
+			"style": {
+				"navigationBarTitleText": "案例详情"
 			}
 		},
 		{
@@ -52,7 +65,7 @@
 	        "selectedIconPath": "static/image/tabBar/page1.png",
 	        "text": "首页"
 	    }, {
-	        "pagePath": "pages/case/index",
+	        "pagePath": "pages/case/index/index",
 	        "iconPath": "static/image/tabBar/case.png",
 	        "selectedIconPath": "static/image/tabBar/case1.png",
 	        "text": "案例"
