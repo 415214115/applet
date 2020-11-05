@@ -3,8 +3,9 @@
 		<view class="informationList" v-for="item in 6" :key="item">
 			<image class="informationImage" :lazy-load="true" src="/static/logo.png" mode="aspectFill"></image>
 			<view class="informationTextTitle">
+				<view class="synopsisTitle">哈哈哈车膜改装</view>
 				<view class="synopsis">
-					重庆市渝中区企业天地西西弗书店
+					重庆市渝中区企业天地西西弗书店重庆市渝中区企业天地西西弗书店
 				</view>
 				<view class="timeLook">
 					<text class="time">023-12345678</text>
@@ -59,16 +60,18 @@
 	}
 	
 	.synopsis {
-		height: 80upx;
+		height: 60upx;
 		width: 480upx;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		line-height: 40upx;
+		line-height: 30upx;
 		text-align: justify;
-		margin-bottom: 40upx;
+		margin-bottom: 16upx;
+		font-size: 24upx;
+		color: #555555;
 	}
 	
 	.timeLook {
@@ -82,7 +85,12 @@
 		position: relative;
 		padding-left: 34upx;
 	}
-	
+	.synopsisTitle{
+		font-size: 33upx;
+		color: #333333;
+		font-weight: 400;
+		margin-bottom: 10upx;
+	}
 	/* .look::before {
 		content: '';
 		position: absolute;
