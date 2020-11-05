@@ -18,6 +18,12 @@
 		</view>
 		<view class="functionBtnBox">
 			<view class="functionBtnCont">
+				<view class="functionBtnList" @tap="toShop">
+					<view class="functionBtnListBox">
+						<image class="functionBtnListImage" mode="scaleToFill" src="/static/image/index/shop.png"></image>
+					</view>
+					<text class="functionBtnListText">店铺列表</text>
+				</view>
 				<view class="functionBtnList" @tap="toSeries">
 					<view class="functionBtnListBox">
 						<image class="functionBtnListImage" mode="scaleToFill" src="/static/image/index/fire.png"></image>
@@ -137,6 +143,12 @@
 				// 跳转到资讯详情
 				uni.navigateTo({
 					url: '../informationDetails/index'
+				})
+			},
+			toShop(){
+				// 跳转至店铺列表
+				uni.navigateTo({
+					url: '../shop/index'
 				})
 			}
 		}

@@ -2,7 +2,7 @@
 	<view class="guarantee">
 		<view class="searchGuarantee">
 			<input class="searchInput" type="text" value="" placeholder="请输入手机号或车牌号"/>
-			<view class="searchButton">查询</view>
+			<view class="searchButton" @tap="toGuaranteeContent">查询</view>
 		</view>
 		<view class="guaranteeContent">
 			<view class="title">质保内容</view>
@@ -37,6 +37,20 @@
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+			toGuaranteeContent(){
+				uni.navigateTo({
+					url: '../guaranteeContent/index'
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

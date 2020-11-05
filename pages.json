@@ -6,6 +6,11 @@
 				"navigationBarTitleText": "KWK色彩车身保护膜"
 			}
 		},{
+			"path": "pages/index/shop/index",
+			"style": {
+				"navigationBarTitleText": "店铺列表"
+			}
+		},{
 			"path": "pages/index/series/index",
 			"style": {
 				"navigationBarTitleText": "产品系列"
@@ -14,6 +19,11 @@
 			"path": "pages/index/guarantee/index",
 			"style": {
 				"navigationBarTitleText": "质保查询"
+			}
+		},{
+			"path": "pages/index/guaranteeContent/index",
+			"style": {
+				"navigationBarTitleText": "质保内容"
 			}
 		},{
 			"path": "pages/index/information/index",
