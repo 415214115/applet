@@ -1,19 +1,19 @@
 <template>
 	<scroll-view class="content" :scroll-y="true">
 		<view class="topBanner">
-			<view class="searchBox" @tap="toSearch">
+			<!-- <view class="searchBox" @tap="toSearch">
 				<image class="searchImg" mode="scaleToFill" src="/static/image/index/search.png"></image><text>请输入搜索内容</text>
-			</view>
+			</view> -->
 			<swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval" :circular="swiper.circular">
-				<swiper-item>
-					<view class="swiper-item uni-bg-red">A</view>
+				<swiper-item v-for="item in bannerList" :key="item">
+					<image class="swiperImg" :lazy-load="true" :src="item.img" mode="aspectFill"></image>
 				</swiper-item>
-				<swiper-item>
+				<!-- <swiper-item>
 					<view class="swiper-item uni-bg-green">B</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item uni-bg-blue">C</view>
-				</swiper-item>
+				</swiper-item> -->
 			</swiper>
 		</view>
 		<view class="functionBtnBox">
@@ -36,7 +36,7 @@
 					</view>
 					<text class="functionBtnListText">施工报价</text>
 				</view>
-				<view class="functionBtnList" @tap="toCase">
+				<view class="functionBtnList" @tap="toCase('')">
 					<view class="functionBtnListBox">
 						<image class="functionBtnListImage" mode="scaleToFill" src="/static/image/index/show.png"></image>
 					</view>
@@ -51,11 +51,11 @@
 			</view>
 		</view>
 		<view class="case shortcutFunc">
-			<view class="caseBox" @tap="toCase">
+			<view class="caseBox" @tap="toCase('1')">
 				<image class="caseImage" src="/static/logo.png" mode="aspectFill"></image>
 				<view class="caseTextTitles">最新案例</view>
 			</view>
-			<view class="caseBox" @tap="toCase">
+			<view class="caseBox" @tap="toCase('2')">
 				<image class="caseImage" src="/static/logo.png" mode="aspectFill"></image>
 				<view class="caseTextTitles">精彩案例</view>
 			</view>
@@ -66,20 +66,13 @@
 				<text class="lookMore" @tap="lookMore">查看更多</text>
 			</view>
 			<view class="information">
-				<view class="informationList" v-for="item in 6" :key="item" @tap="toInformationDetails">
-					<image class="informationImage" src="/static/logo.png" mode="aspectFill"></image>
+				<view class="informationList" v-for="item in informationList" :key="item" @tap="toInformationDetails(item.id)">
+					<image class="informationImage" :src="item.cover" mode="aspectFill"></image>
 					<view class="informationTextTitle">
-						<view class="synopsis">
-							简介简介简介简介简介简介简介简介简介简介简介简介
-							简介简介简介简介简介简介简介简介简介简介简介简介
-							简介简介简介简介简介简介简介简介简介简介简介简介
-							简介简介简介简介简介简介简介简介简介简介简介简介
-							简介简介简介简介简介简介简介简介简介简介简介简介
-							简介简介简介简介简介简介简介简介简介简介简介简介
-						</view>
+						<view class="synopsis">{{ item.context }}</view>
 						<view class="timeLook">
-							<text class="time">2020-11-4 14:41:15</text>
-							<text class="look">1322</text>
+							<text class="time">{{ item.creatTime }}</text>
+							<!-- <text class="look">1322</text> -->
 						</view>
 					</view>
 				</view>
@@ -100,8 +93,14 @@
 					autoplay: true,
 					interval: 3000,
 					circular: true
-				}
+				},
+				bannerList: '',
+				informationList: ''
 			}
+		},
+		onLoad() {
+			this.gatPageBanner()
+			this.getInformationData()
 		},
 		methods:{
 			toSearch(){
@@ -116,8 +115,11 @@
 					url: '../information/index'
 				})
 			},
-			toCase(){
+			toCase(type){
 				// 查看案例
+				if(type){
+					uni.setStorageSync('showType', type)
+				}
 				uni.switchTab({
 				    url: '/pages/case/index/index'
 				});
@@ -139,16 +141,35 @@
 					url: '../series/index'
 				})
 			},
-			toInformationDetails(){
+			toInformationDetails(id){
 				// 跳转到资讯详情
+				console.log(id)
 				uni.navigateTo({
-					url: '../informationDetails/index'
+					url: '../informationDetails/index?id=' + id
 				})
 			},
 			toShop(){
 				// 跳转至店铺列表
 				uni.navigateTo({
 					url: '../shop/index'
+				})
+			},
+			gatPageBanner(){
+				this.$request.get('/car/getLunBoTu').then( res => {
+					if (res.code == 'succes') {
+						this.bannerList = res.data
+						console.log(this.bannerList)
+					}
+				})
+			},
+			getInformationData(){
+				this.$request.post('/car/selectInformations', {
+					pageNum: 1,
+					pageSize: 6
+				}).then(res => {
+					if (res.code == 'succes') {
+						this.informationList = res.data.list
+					}
 				})
 			}
 		}
@@ -338,5 +359,9 @@
 		background-repeat: no-repeat;
 		left: 0;
 		top: 6upx;
+	}
+	.swiperImg{
+		width: 100%;
+		height: 100%;
 	}
 </style>

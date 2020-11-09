@@ -7,7 +7,7 @@
 			</view>
 			<view class="searchBtn" @tap="search">搜索</view>
 		</view>
-		<view class="searchListW">
+		<!-- <view class="searchListW">
 			<view class="searchList">热门搜索</view>
 			<view class="searchListBox">
 				<view class="searchListItem">画画的baby</view>
@@ -16,7 +16,7 @@
 				<view class="searchListItem">和</view>
 				<view class="searchListItem">带刺的玫瑰</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="searchListW" v-if="historyList.length > 0">
 			<view class="searchList flex">
 				<text>历史搜索</text>

@@ -1,15 +1,16 @@
 <template>
 	<scroll-view class="caseDetails" :scroll-y="true" :scroll-x="false">
-		<image class="topcaseImage" :lazy-load="true" src="/static/logo.png" mode="widthFix"></image>
+		<image class="topcaseImage" :lazy-load="true" :src="pageData.cover" mode="widthFix"></image>
 		<view class="caseTitle">
-			<view class="caseTitleText">案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题案例标题</view>
+			<view class="caseTitleText">{{ pageData.title }}</view>
 			<view class="timeLook">
-				<text class="time"></text>
-				<text class="look">1322</text>
+				<text class="time">{{ pageData.creatTime }}</text>
+				<!-- <text class="look">1322</text> -->
 			</view>
 		</view>
 		<view class="caseCont">
-			<image class="caseImage" v-for="item in 12" :key="item" :lazy-load="true" src="/static/logo.png" mode="widthFix"></image>
+			{{ pageData.context }}
+			<!-- <image class="caseImage" v-for="item in 12" :key="item" :lazy-load="true" src="/static/logo.png" mode="widthFix"></image> -->
 		</view>
 	</scroll-view>
 </template>
@@ -18,16 +19,27 @@
 	export default{
 		data(){
 			return{
-				
+				pageData: ''
 			}
 		},
-		onLoad() {
-			uni.setNavigationBarTitle({
-			    title: '新的标题'
-			});
+		onLoad(e) {
+			
+			console.log(e.id)
+			this.getInformationDetails(e.id)
 		},
 		methods:{
-			
+			getInformationDetails(id){
+				this.$request.post('/car/selectInformationById', {
+					id: id
+				}).then( res => {
+					if (res.code == 'succes'){
+						this.pageData = res.data
+						uni.setNavigationBarTitle({
+						    title: this.pageData.title
+						});
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -86,5 +98,10 @@
 	}
 	.topcaseImage{
 		margin-bottom: 20upx;
+	}
+	.caseCont{
+		color: #555555;
+		line-height: 48upx;
+		text-align: justify;
 	}
 </style>

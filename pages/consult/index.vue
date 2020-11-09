@@ -4,15 +4,15 @@
 		<view class="msgBox">
 			<view class="msgList">
 				<view class="msgTitle must">用户姓名</view>
-				<input class="msgInput" type="text" value="" placeholder="请输入用户姓名" />
+				<input class="msgInput" v-model="postData.userName" type="text" value="" placeholder="请输入用户姓名" />
 			</view>
 			<view class="msgList">
 				<view class="msgTitle must">联系电话</view>
-				<input class="msgInput" type="text" value="" placeholder="请输入联系电话" />
+				<input class="msgInput" v-model="postData.phone" type="text" value="" placeholder="请输入联系电话" />
 			</view>
 			<view class="msgList">
-				<view class="msgTitle must">询价车型</view>
-				<input class="msgInput" type="text" value="" placeholder="请输入车型" />
+				<view class="msgTitle">询价车型</view>
+				<input class="msgInput" v-model="postData.carTypeId" type="text" value="" placeholder="请输入车型" />
 			</view>
 			<view class="msgList">
 				<view class="msgTitle">询价系列</view>
@@ -21,29 +21,76 @@
 				</picker>
 			</view>
 		</view>
-		<view class="confirmBtn">提交</view>
+		<view class="confirmBtn" @tap="postMessage">提交</view>
 	</view>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
+	export default {
+		data() {
+			return {
 				series: ['请选择'],
 				seriesIndex: 0,
+				carSeries: [''],
+				postData: {
+					userName: '',
+					phone: '',
+					carTypeId: '',
+					carChemoId: ''
+				}
 			}
 		},
-		methods:{
+		onLoad() {
+			this.getCheMo()
+		},
+		methods: {
 			bindPickerChange: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
+				this.seriesIndex = e.target.value
+				this.postData.carChemoId = this.carSeries[e.target.value].id
+			},
+			postMessage() {
+				if (this.postData.userName == '' || this.postData.phone == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '名字或电话不能为空'
+					});
+					return
+				}
+				this.$request.post('/car/addTourists', this.postData).then(res => {
+					if (res.code == 'succes') {
+						uni.showToast({
+							icon: 'success',
+							title: '提交成功'
+						});
+						setTimeout(() => {
+							uni.switchTab({
+								url: '/pages/offer/index'
+							});
+						}, 2000)
+
+					}
+				})
+			},
+			getCheMo() {
+				this.$request.post('/car/selectCheMoList', {
+					pageNum: 1,
+					pageSize: 20000
+				}).then(res => {
+					if (res.code == 'succes') {
+						// this.carSeries = res.data.list
+						this.carSeries = this.carSeries.concat(res.data.list)
+						res.data.list.forEach((v) => {
+							this.series.push(v.name)
+						})
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.tip{
+	.tip {
 		padding: 20upx;
 		color: #CE1520;
 		text-align: center;
@@ -51,32 +98,39 @@
 		border-bottom: 6upx solid #EEEEEE;
 		font-size: 24upx;
 	}
-	.msgBox{
+
+	.msgBox {
 		padding: 20upx;
 	}
-	.msgList{
+
+	.msgList {
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: nowrap;
 		padding: 30upx 0;
 		border-bottom: 1upx solid #EEEEEE;
 	}
-	.msgInput,.selectorPicker{
+
+	.msgInput,
+	.selectorPicker {
 		width: 560upx;
 		color: #6E6E6E;
 	}
-	.msgTitle{
+
+	.msgTitle {
 		padding-left: 20upx;
 		position: relative;
 	}
-	.must::before{
+
+	.must::before {
 		content: '*';
 		color: #CE1520;
 		position: absolute;
 		left: 0;
 		top: 0;
 	}
-	.confirmBtn{
+
+	.confirmBtn {
 		width: 600upx;
 		position: relative;
 		left: 0;

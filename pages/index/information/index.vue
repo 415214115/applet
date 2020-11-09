@@ -1,19 +1,12 @@
 <template>
 	<view class="information">
-		<view class="informationList" v-for="item in 6" :key="item" @tap="toInformationDetails">
-			<image class="informationImage" src="/static/logo.png" mode="aspectFill"></image>
+		<view class="informationList" v-for="item in informationList" :key="item" @tap="toInformationDetails(item.id)">
+			<image class="informationImage" :src="item.cover" mode="aspectFill"></image>
 			<view class="informationTextTitle">
-				<view class="synopsis">
-					简介简介简介简介简介简介简介简介简介简介简介简介
-					简介简介简介简介简介简介简介简介简介简介简介简介
-					简介简介简介简介简介简介简介简介简介简介简介简介
-					简介简介简介简介简介简介简介简介简介简介简介简介
-					简介简介简介简介简介简介简介简介简介简介简介简介
-					简介简介简介简介简介简介简介简介简介简介简介简介
-				</view>
+				<view class="synopsis">{{ item.context }}</view>
 				<view class="timeLook">
-					<text class="time">2020-11-4 14:41:15</text>
-					<text class="look">1322</text>
+					<text class="time">{{ item.creatTime }}</text>
+					<!-- <text class="look">1322</text> -->
 				</view>
 			</view>
 		</view>
@@ -24,15 +17,35 @@
 	export default{
 		data(){
 			return{
-				
+				informationList: [],
+				queryData:{
+					pageNum: 1,
+					pageSize: 10
+				}
 			}
 		},
+		onLoad() {
+			this.getInformationData()
+		},
 		methods:{
-			toInformationDetails(){
+			toInformationDetails(id){
+				// 跳转到资讯详情
 				uni.navigateTo({
-					url: '../informationDetails/index'
+					url: '../informationDetails/index?id=' + id
+				})
+			},
+			getInformationData(){
+				this.$request.post('/car/selectInformations', this.queryData).then(res => {
+					if (res.code == 'succes') {
+						// this.informationList = res.data.list
+						this.informationList = this.informationList.concat(res.data.list)
+					}
 				})
 			}
+		},
+		onReachBottom() {
+			this.queryData.pageNum += 1
+			this.getInformationData()
 		}
 	}
 </script>

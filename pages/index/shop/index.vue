@@ -1,15 +1,13 @@
 <template>
 	<scroll-view class="caseDetails" :scroll-y="true" :scroll-x="false">
-		<view class="informationList" v-for="item in 6" :key="item">
-			<image class="informationImage" :lazy-load="true" src="/static/logo.png" mode="aspectFill"></image>
+		<view class="informationList" v-for="item in pageData" :key="item">
+			<image class="informationImage" :lazy-load="true" :src="item.image" mode="aspectFill"></image>
 			<view class="informationTextTitle">
-				<view class="synopsisTitle">哈哈哈车膜改装</view>
-				<view class="synopsis">
-					重庆市渝中区企业天地西西弗书店重庆市渝中区企业天地西西弗书店
-				</view>
+				<view class="synopsisTitle">{{ item.name }}</view>
+				<view class="synopsis">{{ item.roadName }}</view>
 				<view class="timeLook">
-					<text class="time">023-12345678</text>
-					<text class="look" @tap="call('023-12345678')">拨打电话</text>
+					<text class="time">{{ item.phone }}</text>
+					<text class="look" @tap="call(item.phone)">拨打电话</text>
 				</view>
 			</view>
 		</view>
@@ -20,14 +18,24 @@
 	export default{
 		data(){
 			return{
-				
+				pageData: ''
 			}
+		},
+		onLoad() {
+			this.getPageData()
 		},
 		methods:{
 			call(phone){
 				uni.makePhoneCall({
 				    phoneNumber: phone 
 				});
+			},
+			getPageData(){
+				this.$request.get('/car/getStoreList?name=').then( res => {
+					if(res.code == 'succes'){
+						this.pageData = res.data
+					}
+				})
 			}
 		}
 	}
@@ -84,6 +92,7 @@
 	.look {
 		position: relative;
 		padding-left: 34upx;
+		color: red;
 	}
 	.synopsisTitle{
 		font-size: 33upx;

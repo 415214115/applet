@@ -4,7 +4,7 @@
 			恭喜您选用正品KWK车身膜，尖端技术使您的爱车得到至尊保护！
 		</view>
 		<view class="searchGuarantee">
-			<input class="searchInput" type="text" value="" placeholder="请输入手机号或车牌号"/>
+			<input class="searchInput" type="text" v-model="value" value="" placeholder="请输入手机号或车牌号"/>
 			<view class="searchButton" @tap="toGuaranteeContent">查询</view>
 		</view>
 		<view class="guaranteeContent">
@@ -43,14 +43,35 @@
 	export default{
 		data(){
 			return{
-				
+				value: ''
 			}
 		},
 		methods:{
 			toGuaranteeContent(){
-				uni.navigateTo({
-					url: '../guaranteeContent/index'
-				})
+				if(this.value){
+					this.$request.get('/car/searchByText',{
+						text: this.value
+					}).then( res => {
+						if(res.code == 'succes'){
+							// this.pageData = res.data
+							// console.log()
+							if(res.data == null){
+								uni.showToast({
+									title: '没有查询到数据'
+								})
+							} else {
+								uni.navigateTo({
+									url: '../guaranteeContent/index?data=' + JSON.stringify(res.data)
+								})
+							}
+						}
+					})
+					
+				} else {
+					uni.showToast({
+						title: '请输入要查询的手机号或车牌号'
+					})
+				}
 			}
 		}
 	}
