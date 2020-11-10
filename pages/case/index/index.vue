@@ -157,7 +157,8 @@
 		onReachBottom() {
 			this.queryData.pageNum += 1
 			this.getPageData()
-		}
+		},
+		
 	}
 </script>
 

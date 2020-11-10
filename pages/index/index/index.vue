@@ -4,7 +4,8 @@
 			<!-- <view class="searchBox" @tap="toSearch">
 				<image class="searchImg" mode="scaleToFill" src="/static/image/index/search.png"></image><text>请输入搜索内容</text>
 			</view> -->
-			<swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval" :circular="swiper.circular">
+			<swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval"
+			 :circular="swiper.circular">
 				<swiper-item v-for="item in bannerList" :key="item">
 					<image class="swiperImg" :lazy-load="true" :src="item.img" mode="aspectFill"></image>
 				</swiper-item>
@@ -52,11 +53,11 @@
 		</view>
 		<view class="case shortcutFunc">
 			<view class="caseBox" @tap="toCase('1')">
-				<image class="caseImage" src="/static/logo.png" mode="aspectFill"></image>
+				<image class="caseImage" src="/static/image/index/2.jpg" mode="aspectFill"></image>
 				<view class="caseTextTitles">最新案例</view>
 			</view>
 			<view class="caseBox" @tap="toCase('2')">
-				<image class="caseImage" src="/static/logo.png" mode="aspectFill"></image>
+				<image class="caseImage" src="/static/image/index/1.jpg" mode="aspectFill"></image>
 				<view class="caseTextTitles">精彩案例</view>
 			</view>
 		</view>
@@ -82,12 +83,12 @@
 </template>
 
 <script>
-	export default{
-		components:{
-			
+	export default {
+		components: {
+
 		},
-		data(){
-			return{
+		data() {
+			return {
 				swiper: {
 					indicatorDots: true,
 					autoplay: true,
@@ -102,67 +103,66 @@
 			this.gatPageBanner()
 			this.getInformationData()
 		},
-		methods:{
-			toSearch(){
+		methods: {
+			toSearch() {
 				// 跳转至搜索页面
 				uni.navigateTo({
 					url: '../search/index'
 				})
 			},
-			lookMore(){
+			lookMore() {
 				// 热门资讯查看更多
 				uni.navigateTo({
 					url: '../information/index'
 				})
 			},
-			toCase(type){
+			toCase(type) {
 				// 查看案例
-				if(type){
+				if (type) {
 					uni.setStorageSync('showType', type)
 				}
 				uni.switchTab({
-				    url: '/pages/case/index/index'
+					url: '/pages/case/index/index'
 				});
 			},
-			toOffer(){
+			toOffer() {
 				uni.switchTab({
-				    url: '/pages/offer/index'
+					url: '/pages/offer/index'
 				});
 			},
-			toGuarantee(){
+			toGuarantee() {
 				// 跳转至质保
 				uni.navigateTo({
 					url: '../guarantee/index'
 				})
 			},
-			toSeries(){
+			toSeries() {
 				// 跳转到产品系列
 				uni.navigateTo({
 					url: '../series/index'
 				})
 			},
-			toInformationDetails(id){
+			toInformationDetails(id) {
 				// 跳转到资讯详情
-				console.log(id)
 				uni.navigateTo({
 					url: '../informationDetails/index?id=' + id
 				})
 			},
-			toShop(){
+			toShop() {
 				// 跳转至店铺列表
 				uni.navigateTo({
 					url: '../shop/index'
 				})
 			},
-			gatPageBanner(){
-				this.$request.get('/car/getLunBoTu').then( res => {
+			gatPageBanner() {
+				this.$request.get('/car/getLunBoTu').then(res => {
 					if (res.code == 'succes') {
 						this.bannerList = res.data
 						console.log(this.bannerList)
 					}
 				})
 			},
-			getInformationData(){
+			getInformationData() {
 				this.$request.post('/car/selectInformations', {
 					pageNum: 1,
 					pageSize: 6
@@ -171,20 +171,30 @@
 						this.informationList = res.data.list
 					}
 				})
+			},
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我正在使用KWK色彩车身保护膜，快来看看有没有你想要的',
+				path: '/pages/case/caseDetails/index?id=3',
+				imageUrl: '/static/logo.png'
 			}
 		}
 		
+
 	}
 </script>
 
 <style scoped>
-	.topBanner{
+	.topBanner {
 		position: relative;
 	}
-	.swiper{
+
+	.swiper {
 		height: 400upx;
 	}
-	.searchBox{
+
+	.searchBox {
 		position: absolute;
 		width: 600upx;
 		border: 1px solid #c9c9c9;
@@ -202,17 +212,20 @@
 		color: #6E6E6E;
 		z-index: 99;
 	}
-	.searchImg{
+
+	.searchImg {
 		width: 36upx;
 		height: 36upx;
 		margin-right: 10upx;
 	}
-	.functionBtnBox{
+
+	.functionBtnBox {
 		width: 100%;
 		padding: 4upx 0;
 		background: #EEEEEE;
 	}
-	.functionBtnCont{
+
+	.functionBtnCont {
 		padding: 20upx;
 		background: #FFFFFF;
 		display: flex;
@@ -221,10 +234,12 @@
 		flex-wrap: nowrap;
 		text-align: center;
 	}
-	.functionBtnList{
+
+	.functionBtnList {
 		width: 100upx;
 	}
-	.functionBtnListBox{
+
+	.functionBtnListBox {
 		width: 80upx;
 		height: 80upx;
 		border-radius: 100%;
@@ -232,33 +247,42 @@
 		padding: 8upx;
 		margin-left: 10upx;
 	}
-	.functionBtnListImage{
+
+	.functionBtnListImage {
 		width: 64upx;
 		height: 64upx;
 	}
-	.functionBtnListText{
+
+	.functionBtnListText {
 		font-size: 24upx;
 		color: #313131;
 	}
-	.shortcutFunc{
+
+	.shortcutFunc {
 		padding: 20px;
 		background: #FFFFFF;
 		border-bottom: 6upx solid #EEEEEE;
 	}
-	.shortcutFunc:last-child{
+
+	.shortcutFunc:last-child {
 		border: none;
 	}
-	.shortcutTitle,.timeLook,.case{
+
+	.shortcutTitle,
+	.timeLook,
+	.case {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
 	}
-	.leftTitle{
+
+	.leftTitle {
 		padding-left: 16upx;
 		position: relative;
 	}
-	.leftTitle::before{
+
+	.leftTitle::before {
 		width: 8upx;
 		height: 100%;
 		content: '';
@@ -267,12 +291,14 @@
 		background: #000000;
 		position: absolute;
 	}
-	.lookMore{
+
+	.lookMore {
 		font-size: 24upx;
 		padding-right: 32upx;
 		position: relative;
 	}
-	.lookMore::after{
+
+	.lookMore::after {
 		width: 32upx;
 		height: 32upx;
 		content: '';
@@ -283,7 +309,8 @@
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 	}
-	.caseBox{
+
+	.caseBox {
 		width: 345upx;
 		height: 200upx;
 		margin-left: 20upx;
@@ -291,15 +318,18 @@
 		position: relative;
 		overflow: hidden;
 	}
-	.caseImage{
+
+	.caseImage {
 		width: 100%;
 		height: 100%;
 	}
-	.caseBox:nth-child(1){
+
+	.caseBox:nth-child(1) {
 		margin-left: 0;
 	}
-	.caseTextTitles{
-		background: rgba(0,0,0,0.5);
+
+	.caseTextTitles {
+		background: rgba(0, 0, 0, 0.5);
 		text-align: center;
 		font-size: 40upx;
 		line-height: 200upx;
@@ -311,7 +341,8 @@
 		right: 0;
 		bottom: 0;
 	}
-	.informationList{
+
+	.informationList {
 		margin-top: 40upx;
 		display: flex;
 		justify-content: space-between;
@@ -319,37 +350,43 @@
 		border-bottom: 1px solid #EEEEEE;
 		padding-bottom: 20upx;
 	}
-	.informationList:last-child{
+
+	.informationList:last-child {
 		border: none;
 		padding-bottom: 0;
 	}
-	.informationImage{
+
+	.informationImage {
 		width: 210upx;
 		height: 150upx;
 		border-radius: 10upx;
 		margin-right: 20upx;
 	}
-	.synopsis{
+
+	.synopsis {
 		height: 80upx;
 		width: 480upx;
-		 display: -webkit-box;
-		  -webkit-line-clamp: 2;
-		  -webkit-box-orient: vertical;
-		  overflow : hidden;
-		  text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		line-height: 40upx;
 		text-align: justify;
 		margin-bottom: 40upx;
 	}
-	.timeLook{
+
+	.timeLook {
 		font-size: 20upx;
 		color: #555555;
 	}
-	.look{
+
+	.look {
 		position: relative;
 		padding-left: 34upx;
 	}
-	.look::before{
+
+	.look::before {
 		content: '';
 		position: absolute;
 		width: 20upx;
@@ -360,7 +397,8 @@
 		left: 0;
 		top: 6upx;
 	}
-	.swiperImg{
+
+	.swiperImg {
 		width: 100%;
 		height: 100%;
 	}
