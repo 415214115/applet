@@ -27,10 +27,12 @@
 	export default{
 		data(){
 			return{
-				pagedata: ''
+				pagedata: '',
+				caseID: ''
 			}
 		},
 		onLoad(e) {
+			this.caseID = e.id
 			this.getPageData(e.id)
 		},
 		methods:{
@@ -45,6 +47,13 @@
 						})
 					}
 				})
+			}
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '我正在使用KWK色彩车身保护膜，快来看看有没有你想要的',
+				path: `/pages/case/caseDetails/index?id=${this.caseID}`,
+				imageUrl: '/static/logo.png'
 			}
 		}
 	}

@@ -172,16 +172,7 @@
 					}
 				})
 			},
-		},
-		onShareAppMessage(res) {
-			return {
-				title: '我正在使用KWK色彩车身保护膜，快来看看有没有你想要的',
-				path: '/pages/case/caseDetails/index?id=3',
-				imageUrl: '/static/logo.png'
-			}
 		}
-		
-
 	}
 </script>
 
