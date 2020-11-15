@@ -8,15 +8,24 @@
 				<!-- <text class="look">1322</text> -->
 			</view>
 		</view>
-		<view class="caseCont">
-			{{ pageData.context }}
+		<view class="caseCont" >
+			<!-- v-html="pageData.context" -->
+			<u-parse :content="pageData.context" @preview="preview" @navigate="navigate" />
+			<!-- <view >
+				
+			</view> -->
+			<!-- {{ pageData.context }} -->
 			<!-- <image class="caseImage" v-for="item in 12" :key="item" :lazy-load="true" src="/static/logo.png" mode="widthFix"></image> -->
 		</view>
 	</scroll-view>
 </template>
 
 <script>
+	import uParse from '@/components/gaoyia-parse/parse.vue'
 	export default{
+		components: {
+		    uParse
+		  },
 		data(){
 			return{
 				pageData: ''
@@ -39,7 +48,13 @@
 						});
 					}
 				})
-			}
+			},
+			 preview(src, e) {
+			      // do something
+			    },
+			    navigate(href, e) {
+			      // do something
+			    }
 		}
 	}
 </script>

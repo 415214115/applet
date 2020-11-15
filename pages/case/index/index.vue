@@ -53,10 +53,16 @@
 					pageNum: 1,
 					pageSize: 10
 				},
-				pageData: ''
+				pageData: []
 			}
 		},
 		onShow() {
+			this.queryData.chemoId = null
+			this.queryData.colorId = null
+			this.queryData.typeId = null
+			this.queryData.showType = null
+			this.queryData.pageNum = 1
+			this.queryData.pageSize = 10
 			if(uni.getStorageSync('seriesId')){
 				this.queryData.chemoId = uni.getStorageSync('seriesId')
 			}
@@ -79,17 +85,20 @@
 		methods:{
 			bindPickerChange: function(e) {
 				this.brandIndex = e.target.value
-				this.queryData.typeId = this.brand[e.target.value].id || null
+				this.queryData.typeId = this.carType[e.target.value].id
+				this.pageData = []
 				this.getPageData()
 			},
 			selectorPickerChange: function(e) {
 				this.seriesIndex = e.target.value
-				this.queryData.chemoId = this.series[e.target.value].id || null
+				this.queryData.chemoId = this.carSeries[e.target.value].id || null
+				this.pageData = []
 				this.getPageData()
 			},
 			colorPickerChange: function(e) {
 				this.colourIndex = e.target.value
 				this.queryData.colorId = this.coloe[e.target.value].id || null
+				this.pageData = []
 				this.getPageData()
 			},
 			toCaseDetails(id){
@@ -101,11 +110,11 @@
 			getPageData(){
 				this.$request.post('/car/selectAnLi', this.queryData).then( res => {
 					if(res.code == 'succes'){
-						this.pageData = res.data.list
-						this.queryData.chemoId = null
-						this.queryData.colorId = null
-						this.queryData.typeId = null
-						this.queryData.showType = null
+						this.pageData = this.pageData.concat(res.data.list) 
+						// this.queryData.chemoId = null
+						// this.queryData.colorId = null
+						// this.queryData.typeId = null
+						// this.queryData.showType = null
 						uni.removeStorageSync('seriesId')
 						uni.removeStorageSync('carType')
 						uni.removeStorageSync('color')

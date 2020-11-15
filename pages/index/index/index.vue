@@ -70,7 +70,7 @@
 				<view class="informationList" v-for="item in informationList" :key="item" @tap="toInformationDetails(item.id)">
 					<image class="informationImage" :src="item.cover" mode="aspectFill"></image>
 					<view class="informationTextTitle">
-						<view class="synopsis">{{ item.context }}</view>
+						<view class="synopsis">{{ item.title }}</view>
 						<view class="timeLook">
 							<text class="time">{{ item.creatTime }}</text>
 							<!-- <text class="look">1322</text> -->
