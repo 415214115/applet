@@ -53,7 +53,8 @@
 					pageNum: 1,
 					pageSize: 10
 				},
-				pageData: []
+				pageData: [],
+				pageTolNum: ''
 			}
 		},
 		onShow() {
@@ -111,6 +112,7 @@
 				this.$request.post('/car/selectAnLi', this.queryData).then( res => {
 					if(res.code == 'succes'){
 						this.pageData = this.pageData.concat(res.data.list) 
+						this.pageTolNum = res.data.total
 						// this.queryData.chemoId = null
 						// this.queryData.colorId = null
 						// this.queryData.typeId = null
@@ -164,8 +166,11 @@
 			}
 		},
 		onReachBottom() {
-			this.queryData.pageNum += 1
-			this.getPageData()
+			if(this.queryData.pageNum < (this.pageTolNum / 10)){
+				this.queryData.pageNum += 1
+				this.getPageData()
+			}
+			
 		},
 		
 	}

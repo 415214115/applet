@@ -18,32 +18,53 @@
 		</view>
 		<view class="caseCont">
 			<view class="texts">{{ pagedata.showText }}</view>
-			<image class="caseImage" v-for="item in pagedata.imgs" :key="item" :lazy-load="true" :src="item" mode="widthFix"></image>
+			<image class="caseImage" v-for="(item, index) in pagedata.imgs" :key="item" :lazy-load="true" :src="item" @tap="previewImage(index)"
+			 mode="widthFix"></image>
 		</view>
 	</scroll-view>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
+	export default {
+		data() {
+			return {
 				pagedata: '',
-				caseID: ''
+				caseID: '',
+				imagesList: []
 			}
 		},
 		onLoad(e) {
 			this.caseID = e.id
 			this.getPageData(e.id)
 		},
-		methods:{
-			getPageData(id){
+		methods: {
+			previewImage(index) {
+				uni.previewImage({
+					current: index,
+					urls: this.imagesList,
+					longPressActions: {
+						// itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {
+							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
+						}
+					}
+				});
+			},
+			getPageData(id) {
 				this.$request.get('/car/selectModelInfoById', {
 					id: id
-				}).then( res => {
-					if(res.code == 'succes'){
+				}).then(res => {
+					if (res.code == 'succes') {
 						this.pagedata = res.data[0]
+						this.pagedata.imgs.forEach((v) => {
+							this.imagesList.push(v)
+						})
+						// this.imagesList
 						uni.setNavigationBarTitle({
-							title: this.pageData.title
+							title: this.pagedata.title
 						})
 					}
 				})
@@ -53,49 +74,59 @@
 			return {
 				title: '我正在使用KWK色彩车身保护膜，快来看看有没有你想要的',
 				path: `/pages/case/caseDetails/index?id=${this.caseID}`,
-				imageUrl: '/static/logo.png'
+				imageUrl: this.pagedata.showImg
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.caseDetails{
+	.caseDetails {
 		padding: 20upx;
 	}
-	.timeLook,.myVideo,.caseImage,.texts{
+
+	.timeLook,
+	.myVideo,
+	.caseImage,
+	.texts {
 		width: 710upx;
 	}
-	.caseTitle{
+
+	.caseTitle {
 		border-bottom: 1px solid #EEEEEE;
 	}
-	.caseTitleText{
+
+	.caseTitleText {
 		width: 710upx;
 		display: -webkit-box;
-		  -webkit-line-clamp: 2;
-		  -webkit-box-orient: vertical;
-		  overflow : hidden;
-		  text-overflow: ellipsis;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		line-height: 40upx;
 		text-align: justify;
 		margin-bottom: 30upx;
 	}
-	.timeLook{
+
+	.timeLook {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
 		margin-bottom: 30upx;
 	}
-	.timeLook{
+
+	.timeLook {
 		font-size: 20upx;
 		color: #555555;
 	}
-	.look{
+
+	.look {
 		position: relative;
 		padding-left: 34upx;
 	}
-	.look::before{
+
+	.look::before {
 		content: '';
 		position: absolute;
 		width: 20upx;
@@ -106,14 +137,17 @@
 		left: 0;
 		top: 6upx;
 	}
-	.texts{
+
+	.texts {
 		line-height: 48upx;
 		margin-top: 20upx;
 	}
-	.caseImage{
+
+	.caseImage {
 		margin-top: 20upx;
 	}
-	.caseTitleTitle{
+
+	.caseTitleTitle {
 		line-height: 64upx;
 		font-size: 36upx;
 		font-weight: bold;
