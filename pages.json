@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index/index",
 			"style": {
-				"navigationBarTitleText": "KWK色彩车身保护膜"
+				"navigationBarTitleText": "KWK车身色彩保护膜"
 			}
 		},{
 			"path": "pages/index/shop/index",
@@ -93,7 +93,7 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "KWK色彩车身保护膜",
+		"navigationBarTitleText": "KWK车身色彩保护膜",
 		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#F8F8F8"
 	}
