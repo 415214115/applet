@@ -76,12 +76,15 @@
 			if(uni.getStorageSync('color')){
 				this.queryData.colorId = uni.getStorageSync('color')
 			}
+			this.pageData = []
 			this.getPageData()
 		},
 		onLoad() {
+			
 			this.getCarType()
 			this.getCarSeries()
 			this.getCarColor()
+			
 		},
 		methods:{
 			bindPickerChange: function(e) {

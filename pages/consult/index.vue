@@ -22,6 +22,10 @@
 			</view>
 		</view>
 		<view class="confirmBtn" @tap="postMessage">提交</view>
+		<view class="bottomTip">
+			<view class="">加盟培训TEL：13983018324</view>
+			<view class="">最终解释权归重庆客唔酷汽车饰品有限公司所有</view>
+		</view>
 	</view>
 </template>
 
@@ -142,5 +146,16 @@
 		color: #FFFFFF;
 		padding: 20upx;
 		text-align: center;
+	}
+	.bottomTip{
+		width: 100%;
+		position: absolute;
+		bottom: 20upx;
+		text-align: center;
+		color: #6E6E6E;
+		line-height: 50upx;
+	}
+	.bottomTip view{
+		font-size: 24upx;
 	}
 </style>

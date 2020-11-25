@@ -1,12 +1,12 @@
 <template>
 	<view class="offer">
 		<view class="casePicker">
-			<!-- <view class="selectorBox">
+			<view class="selectorBox">
 				<view class="">品牌</view>
 				<picker class="selectorPicker" @change="bindPickerChange" :value="brandIndex" :range="brand" mode="selector">
 					<view class="uni-input">{{brand[brandIndex]}}</view>
 				</picker>
-			</view> -->
+			</view>
 			<view class="selectorBox">
 				<view class="">型号</view>
 				<picker class="selectorPicker" @change="modelPickerChange" :value="modelIndex" :range="model" mode="selector">
@@ -27,7 +27,7 @@
 			</view> -->
 		</view>
 		<view class="price">整车价格：<text>{{ pageData.price || 0 }}</text> <text>RMB</text></view>
-		<image class="priceList" src="/static/logo.png" mode="widthFix"></image>
+		<image class="priceList" src="/static/999.jpg" mode="widthFix"></image>
 	</view>
 </template>
 
@@ -35,8 +35,8 @@
 	export default{
 		data(){
 			return{
-				// brand: ["请选择"],
-				// brandIndex: 0,
+				brand: ["请选择"],
+				brandIndex: 0,
 				series: ['请选择'],
 				seriesIndex: 0,
 				// colour: ['请选择'],
@@ -55,22 +55,22 @@
 			}
 		},
 		onLoad() {
-			// this.getCarType()
-			this.getCarModel()
+			this.getCarType()
+			// this.getCarModel()
 			this.getCarSeries()
 			// this.getCarColor()
 		},
 		methods:{
-			// bindPickerChange(e) {
-			// 	this.brandIndex = e.target.value
-			// 	this.queryData.typeId = this.carType[e.target.value].id || null
-			// 	// if(this.carType[e.target.value] == null){
-			// 	// 	this.model = ['请选择']
-			// 	// } else {
-					
-			// 	// 	// this.getCarModel(this.carType[e.target.value].id)
-			// 	// }
-			// },
+			bindPickerChange(e) {
+				this.brandIndex = e.target.value
+				this.queryData.typeId = this.carType[e.target.value].id || null
+				// if(this.carType[e.target.value] == null){
+					this.model = ['请选择']
+					this.modelIndex = 0
+				// } else {
+					this.getCarModel(this.carType[e.target.value].id)
+				// }
+			},
 			selectorPickerChange(e) {
 				this.seriesIndex = e.target.value
 				this.queryData.chemoId = this.carSeries[e.target.value].id || null
@@ -109,10 +109,10 @@
 					}
 				})
 			},
-			getCarModel(){
+			getCarModel(type){
 				// 型号
 				this.$request.post('/back/selectCarType',{
-					typeId: '0'
+					typeId: type
 				}).then( res => {
 					if(res.code == 'succes'){
 						this.corModel = this.corModel.concat(res.data) 

@@ -53,13 +53,13 @@
 		</view>
 		<view class="case shortcutFunc">
 			<view class="caseBox" @tap="toCase('1')">
-				<image class="caseImage" src="/static/image/index/2.jpg" mode="aspectFill"></image>
-				<view class="caseTextTitles">最新案例</view>
+				<image class="caseImage" src="/static/image/index/11.jpg" mode="aspectFill"></image>
+				<view class="caseTextTitles">最新精彩案例</view>
 			</view>
-			<view class="caseBox" @tap="toCase('2')">
+			<!-- <view class="caseBox" @tap="toCase('2')">
 				<image class="caseImage" src="/static/image/index/1.jpg" mode="aspectFill"></image>
 				<view class="caseTextTitles">精彩案例</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="shortcutFunc">
 			<view class="shortcutTitle">
@@ -118,9 +118,9 @@
 			},
 			toCase(type) {
 				// 查看案例
-				if (type) {
-					uni.setStorageSync('showType', type)
-				}
+				// if (type) {
+				// 	uni.setStorageSync('showType', type)
+				// }
 				uni.switchTab({
 					url: '/pages/case/index/index'
 				});
@@ -302,7 +302,7 @@
 	}
 
 	.caseBox {
-		width: 345upx;
+		width: 100%;
 		height: 200upx;
 		margin-left: 20upx;
 		border-radius: 10upx;
