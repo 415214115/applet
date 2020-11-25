@@ -120,6 +120,7 @@
 		width: 560upx;
 		color: #6E6E6E;
 		height: 64upx;
+		line-height: 64upx;
 	}
 
 	.msgTitle {
