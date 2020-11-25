@@ -111,7 +111,7 @@
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: nowrap;
-		padding: 30upx 0;
+		padding: 24upx 0;
 		border-bottom: 1upx solid #EEEEEE;
 	}
 
@@ -119,10 +119,12 @@
 	.selectorPicker {
 		width: 560upx;
 		color: #6E6E6E;
+		height: 64upx;
 	}
 
 	.msgTitle {
 		padding-left: 20upx;
+		line-height: 64upx;
 		position: relative;
 	}
 

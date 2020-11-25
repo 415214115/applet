@@ -89,19 +89,31 @@
 		methods:{
 			bindPickerChange: function(e) {
 				this.brandIndex = e.target.value
-				this.queryData.typeId = this.carType[e.target.value].id
+				if(e.target.value < 1){
+					this.queryData.typeId = null
+				} else {
+					this.queryData.typeId = this.carType[e.target.value].id
+				}
 				this.pageData = []
 				this.getPageData()
 			},
 			selectorPickerChange: function(e) {
 				this.seriesIndex = e.target.value
-				this.queryData.chemoId = this.carSeries[e.target.value].id || null
+				if(e.target.value < 1){
+					this.queryData.chemoId = null
+				} else {
+					this.queryData.chemoId = this.carSeries[e.target.value].id || null
+				}
 				this.pageData = []
 				this.getPageData()
 			},
 			colorPickerChange: function(e) {
 				this.colourIndex = e.target.value
-				this.queryData.colorId = this.coloe[e.target.value].id || null
+				if(e.target.value < 1){
+					this.queryData.colorId = null
+				} else {
+					this.queryData.colorId = this.coloe[e.target.value].id || null
+				}
 				this.pageData = []
 				this.getPageData()
 			},
@@ -182,7 +194,7 @@
 <style scoped>
 	.case{
 		padding: 20upx;
-		padding-top: 212upx;
+		padding-top: 70upx;
 	}
 	.casePicker{
 		position: fixed;

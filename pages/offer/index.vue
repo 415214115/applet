@@ -2,17 +2,19 @@
 	<view class="offer">
 		<view class="casePicker">
 			<view class="selectorBox">
-				<view class="">品牌</view>
-				<picker class="selectorPicker" @change="bindPickerChange" :value="brandIndex" :range="brand" mode="selector">
-					<view class="uni-input">{{brand[brandIndex]}}</view>
+				<view class="">品牌/车型</view>
+				<picker class="selectorPicker" @change="bindPickerChange" @columnchange="columnChanges" :value="brandSeriesValue" :range="brandSeriesList" mode="multiSelector">
+					<view class="uni-input">
+						{{brandSeriesList[0][brandSeriesValue[0]]}} , {{brandSeriesList[1][brandSeriesValue[1]]}}
+					</view>
 				</picker>
 			</view>
-			<view class="selectorBox">
+			<!-- <view class="selectorBox">
 				<view class="">型号</view>
 				<picker class="selectorPicker" @change="modelPickerChange" :value="modelIndex" :range="model" mode="selector">
 					<view class="uni-input">{{model[modelIndex]}}</view>
 				</picker>
-			</view>
+			</view> -->
 			<view class="selectorBox">
 				<view class="">系列</view>
 				<picker class="selectorPicker" @change="selectorPickerChange" :value="seriesIndex" :range="series" mode="selector">
@@ -35,14 +37,16 @@
 	export default{
 		data(){
 			return{
-				brand: ["请选择"],
-				brandIndex: 0,
+				brand: '',
+				// brandIndex: 0,
 				series: ['请选择'],
 				seriesIndex: 0,
+				brandSeriesList: [['请选择'], ["请选择"]],
+				brandSeriesValue: [0, 0],
 				// colour: ['请选择'],
 				// colourIndex: 0,
-				model: ['请选择'],
-				modelIndex: 0,
+				model: '',
+				// modelIndex: 0,
 				carType: [null],
 				carSeries: [null],
 				// coloe: [null],
@@ -61,20 +65,46 @@
 			// this.getCarColor()
 		},
 		methods:{
+			columnChanges(e){
+				if(e.detail.column == 0){
+					console.log(this.brand[e.detail.value - 1])
+					if(e.detail.value > 0){
+						this.brandSeriesValue[1] = 0
+						this.getCarModel(this.brand[e.detail.value - 1].id)
+					}
+				}
+				this.pageData = ''
+				this.seriesIndex = 0
+			},
 			bindPickerChange(e) {
-				this.brandIndex = e.target.value
-				this.queryData.typeId = this.carType[e.target.value].id || null
+				this.brandSeriesValue = e.detail.value
+				if(e.detail.value[1] > 0){
+					this.queryData.typeId = this.model[e.detail.value[1] - 1].id || null
+				}
+				
+				// this.brandIndex = e.target.value
+				// this.queryData.typeId = this.carType[e.target.value].id || null
 				// if(this.carType[e.target.value] == null){
-					this.model = ['请选择']
-					this.modelIndex = 0
+					// this.model = ['请选择']
+					// this.modelIndex = 0
 				// } else {
-					this.getCarModel(this.carType[e.target.value].id)
+					// this.getCarModel(this.carType[e.target.value].id)
 				// }
 			},
 			selectorPickerChange(e) {
-				this.seriesIndex = e.target.value
-				this.queryData.chemoId = this.carSeries[e.target.value].id || null
-				this.getPic()
+				if(e.target.value < 1) return
+				if(this.brandSeriesValue[1] == 0){
+					uni.showToast({
+						icon: 'none',
+						title: '请先选择车辆品牌及车型',
+						duration: 2000
+					})
+				} else {
+					this.seriesIndex = e.target.value
+					this.queryData.chemoId = this.carSeries[e.target.value].id || null
+					this.getPic()
+				}
+				
 				// this.queryData.chemoId = this.series[e.target.value].id || null
 				// this.getPageData()
 			},
@@ -102,9 +132,10 @@
 					typeId:"-1"
 				}).then( res => {
 					if(res.code == 'succes'){
-						this.carType = this.carType.concat(res.data) 
+						// this.carType = this.carType.concat(res.data) 
+						this.brand = res.data
 						res.data.forEach((v)=>{
-							this.brand.push(v.name)
+							this.brandSeriesList[0].push(v.name)
 						})
 					}
 				})
@@ -115,9 +146,13 @@
 					typeId: type
 				}).then( res => {
 					if(res.code == 'succes'){
-						this.corModel = this.corModel.concat(res.data) 
+						// this.corModel = this.corModel.concat(res.data) 
+						this.model = res.data
+						console.log(this.model)
+						this.brandSeriesList[1] = ['请选择']
 						res.data.forEach((v)=>{
-							this.model.push(v.name)
+							// this.model.push(v.name)
+							this.brandSeriesList[1].push(v.name)
 						})
 					}
 				})
