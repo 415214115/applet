@@ -37,6 +37,10 @@
 				<view class="guaranteeMsgTitle">整车价格:</view>
 				<view class="guaranteeMsgContent">{{ pageData.price }}</view>
 			</view>
+			<view class="guaranteeMsgList">
+				<view class="guaranteeMsgTitle">备注:</view>
+				<view class="guaranteeMsgContent">{{ pageData.remark }}</view>
+			</view>
 		</view>
 		<view class="picture" v-if="pageData.imgs && pageData.imgs.length > 0">
 			<view class="pictureTitle">车辆图片</view>
@@ -109,14 +113,24 @@
 		flex-wrap: nowrap;
 		line-height: 56upx;
 		align-items: center;
+		text-align: right;
+		position: relative;
 	}
 	.guaranteeMsgTitle{
+		width: 120upx;
 		margin-right: 20upx;
+		vertical-align: text-top;
 		color: #313131;
+		position: absolute;
+		top: 0;
 	}
 	.guaranteeMsgContent{
 		color: #555555;
 		font-size: 24upx;
+		width: 570upx;
+		text-align: justify;
+		margin-left: 140upx;
+		position: relative;
 	}
 	.pictureList{
 		width: 100%;

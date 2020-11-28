@@ -7,7 +7,7 @@
 			<swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval"
 			 :circular="swiper.circular">
 				<swiper-item v-for="item in bannerList" :key="item">
-					<image class="swiperImg" :lazy-load="true" :src="item.img" mode="aspectFill"></image>
+					<image class="swiperImg" :lazy-load="true" :src="item.img" mode="scaleToFill"></image>
 				</swiper-item>
 				<!-- <swiper-item>
 					<view class="swiper-item uni-bg-green">B</view>

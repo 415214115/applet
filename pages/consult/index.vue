@@ -67,8 +67,12 @@
 							title: '提交成功'
 						});
 						setTimeout(() => {
+							this.postData.userName = ''
+							this.postData.phone = ''
+							this.postData.carTypeId = ''
+							this.postData.carChemoId = ''
 							uni.switchTab({
-								url: '/pages/offer/index'
+								url: '/pages/index/index/index'
 							});
 						}, 2000)
 
