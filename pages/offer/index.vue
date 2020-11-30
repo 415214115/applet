@@ -1,6 +1,7 @@
 <template>
 	<view class="offer">
 		<view class="casePicker">
+			<view class="topTip">KWK车身色彩保护膜/全国统一零售价</view>
 			<view class="selectorBox">
 				<view class="">品牌/车型</view>
 				<picker class="selectorPicker" @change="bindPickerChange" @columnchange="columnChanges" :value="brandSeriesValue" :range="brandSeriesList" mode="multiSelector">
@@ -237,5 +238,11 @@
 	.priceList{
 		width: 100%;
 		margin-top: 60upx;
+	}
+	.topTip{
+		width: 100%;
+		text-align: center;
+		color: red;
+		line-height: 64upx;
 	}
 </style>
